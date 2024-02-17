@@ -33,9 +33,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
+                    "name": "interact",
                     "type": "Button",
                     "id": "8458517e-2ce1-4f16-85b7-3f3bf4bc3f1f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "submit",
+                    "type": "Button",
+                    "id": "4d07f015-137b-4d0b-9ff7-72e6e0ddfbe6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -267,10 +276,21 @@
                     "name": "",
                     "id": "8a463cf7-69ae-4f75-8de2-466730e6e306",
                     "path": "<Keyboard>/e",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse;Gamepad;Touch;XR;Joystick",
+                    "action": "interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b55c5f5e-7ee7-4e85-bd87-4e282d86247c",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Interact",
+                    "action": "submit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
