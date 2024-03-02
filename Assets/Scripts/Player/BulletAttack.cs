@@ -26,7 +26,7 @@ public class BulletAttack : MonoBehaviour
     void Update()
     {
         // checking keydown to fire
-        if ((timer >= cooldown) && Input.GetKeyDown(KeyCode.Space))
+        if ((timer >= cooldown) && Input.GetKey(KeyCode.Space))
         {
             // create bullet object and set its velocity direction
             GameObject temp = Instantiate(bullet, transform.position, Quaternion.identity);

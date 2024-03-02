@@ -14,6 +14,8 @@ public class TileTrigger : MonoBehaviour
 
     private void Start()
     {
+        scene = GameManager.getRoom().name;
+
         col = this.GetComponent<CompositeCollider2D>();
         popup.SetActive(false);
         end = false;
