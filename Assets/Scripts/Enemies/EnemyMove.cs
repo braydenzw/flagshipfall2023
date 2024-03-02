@@ -7,6 +7,7 @@ public class EnemyMove : MonoBehaviour
     private Transform player;
     private Rigidbody2D rb;
     public float speed;
+
     // closest enemy should move to player
     public float range;
 
@@ -15,7 +16,7 @@ public class EnemyMove : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
         player = GameObject.FindWithTag("Player").GetComponent<Transform>();
     }
-    // Update is called once per frame
+
     void Update()
     {
         Vector2 direction = (player.position - transform.position).normalized;

@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelTypes/HallwayLevel.unity
     guid: 3d0dccb0f16b24c499178638a833b25c
+  - enabled: 1
+    path: Assets/Scenes/LevelTypes/End.unity
+    guid: 5a8e40426105a4c79aaa38538cec5b09
   m_configObjects: {}

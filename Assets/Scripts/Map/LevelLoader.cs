@@ -9,9 +9,8 @@ public class LevelLoader : MonoBehaviour
     private GameObject right;
     private GameObject bottom;
 
-    public Transform player;
+    public GameObject player;
 
-    // Start is called before the first frame update
     void Start()
     {
         left = GameObject.FindWithTag("leftDoor");
@@ -19,7 +18,6 @@ public class LevelLoader : MonoBehaviour
         right = GameObject.FindWithTag("rightDoor");
         bottom = GameObject.FindWithTag("bottomDoor");
 
-        // assign doors their loaders
         assignDoors();
         positionPlayer();
     }
@@ -28,6 +26,8 @@ public class LevelLoader : MonoBehaviour
     {
         Level curr = GameManager.curr;
 
+        // if the current level has a valid reference
+            // make the trigger point to that reference
         if(curr.getLeft() != null)
         {
             left.GetComponent<DoorLoader>().nextRoom = curr.getLeft();
@@ -67,19 +67,25 @@ public class LevelLoader : MonoBehaviour
 
     private void positionPlayer()
     {
-        // change position based on
-        if(GameManager.fromDoor == "leftDoor")
+        // this isn't working for some reason...
+        // player keeps reverting back to 0,0,0
+        Vector3 pos = player.transform.position;
+
+        // change position based on where the entry point was
+        if (GameManager.fromDoor == "leftDoor")
         {
-            player.position = left.transform.position + new Vector3(0.6f, -0.4f, 0f);  
+            pos = new Vector3(left.transform.position.x + 0.3f, left.transform.position.y - 0.2f, player.transform.position.z);  
         } else if (GameManager.fromDoor == "topDoor")
         {
-            player.position = top.transform.position + new Vector3(-0.6f, -0.4f, 0f);
+            pos = new Vector3(top.transform.position.x - 0.3f, top.transform.position.y - 0.2f, player.transform.position.z);
         } else if (GameManager.fromDoor == "rightDoor")
         {
-            player.position = right.transform.position + new Vector3(-0.6f, 0.4f, 0f);
+            pos = new Vector3(right.transform.position.x - 0.3f, right.transform.position.y + 0.2f, player.transform.position.z);
         } else if (GameManager.fromDoor == "bottomDoor")
         {
-            player.position = bottom.transform.position + new Vector3(0.6f, 0.4f, 0f);
+            pos = new Vector3(bottom.transform.position.x + 0.3f, bottom.transform.position.y + 0.2f, player.transform.position.z);
         }
+
+        player.transform.position = pos;
     }
 }

@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        // object should be constant throughout session
         if (instance == null)
             instance = this;
         else
@@ -28,12 +29,15 @@ public class GameManager : MonoBehaviour
         ensureEnd();
 
         printMap();
+
+        // assign start
         curr = map[0, 2];
         fromDoor = "bottomDoor";
 
         DontDestroyOnLoad(gameObject);
     }
 
+    // so other scripts can access these vars
     public static Level getRoom()
     {
         return curr;
@@ -77,11 +81,18 @@ public class GameManager : MonoBehaviour
 
     private void ensureEnd()
     {
+        // recursively checks that the end can be reached
         List<Level> l = new List<Level>();
         bool pathExists = checkDoor(map[0, 2], l);
         while (!pathExists)
         {
             // greedy implementation (sorry)
+                // if no path, we will just repeat the ENTIRE
+                // process until there is one
+
+            // better way to do this would be to create a path
+                // if no path exists, but I don't feel like doing
+                // that rn
             createMap();
             connectDoors();
             l = new List<Level>();
@@ -97,26 +108,29 @@ public class GameManager : MonoBehaviour
             return true;
         }
 
+        // add to visited list
         l.Add(curr);
         Level left = curr.getLeft();
         Level up = curr.getUp();
         Level right = curr.getRight();
         Level down = curr.getDown();
 
-        if(left != null && !l.Contains(left))
+        // check valid paths recurisvely
+        if(left != null && !l.Contains(left) && checkDoor(left, l))
         {
-            return checkDoor(left, l);
-        } else if (up != null && !l.Contains(up))
+            return true;
+        } else if (up != null && !l.Contains(up) && checkDoor(up, l))
         {
-            return checkDoor(up, l);
-        } else if (right != null && !l.Contains(right))
+            return true;
+        } else if (right != null && !l.Contains(right) && checkDoor(right, l))
         {
-            return checkDoor(right, l);
-        } else if (down != null && !l.Contains(down))
+            return true;
+        } else if (down != null && !l.Contains(down) && checkDoor(down, l))
         {
-            return checkDoor(down, l);
+            return true;
         }
 
+        // no valid paths -> return false up recursion stack
         return false;
     }
 
@@ -137,6 +151,7 @@ public class GameManager : MonoBehaviour
             // initializes all null
             Level[] doors = new Level[4];
 
+            // just check if there are valid paths
             if(x > 0)
             {
                 doors[0] = map[y, x - 1];
@@ -165,6 +180,7 @@ public class GameManager : MonoBehaviour
     {
         map = new Level[5, 5];
 
+        // create 2d array of random rooms
         for (int i = 0; i < 25; i++)
         {
             if (Random.value > mapEmptyRatio)
@@ -177,11 +193,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // make sure start is a valid room
         if (map[0, 2] == null)
         {
             map[0, 2] = new Level(levelScenes[Random.Range(0, levelScenes.Length)]);
         }
 
+        // make sure end is a valid room
         end = new Vector2Int(Random.Range(2, 5), Random.Range(0, 5));
 
         if (map[end.x, end.y] == null)
